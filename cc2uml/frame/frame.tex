@@ -1,0 +1,57 @@
+\documentclass{ctexbook}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usepackage{listings}
+\usepackage[school]{pgf-umlcd}
+
+%%%%%%%%%%%%%%%%%%%%%纸张大小%%%%%%%%%%%%%%%%%%%%%%%%
+%以下这四条指令是一组，可以设置纸张大小，并且
+%页边距
+\usepackage{geometry} % geometry 与 anysize 不能一起用
+%\geometry{paperwidth=1414mm,paperheight=1000mm} % B0 横向
+%\geometry{paper=b0paper,landscape} % B0 横向
+\geometry{paper=c1paper} 
+\geometry{left=1cm,right=1cm,top=1.5cm,bottom=1cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{breaklines}%这条命令可以让LaTeX自动将长的代码行换行排版
+\lstset{extendedchars=false}%这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+
+%常用设置
+\lstset{                        %Settings for listings package.
+  language=[ANSI]{C++},
+  backgroundcolor=\color{lightgray},
+  basicstyle=\ttfamily\small,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  commentstyle=\color{olive},
+  directivestyle=\color{blue},
+  extendedchars=false,
+  frame=shadowbox
+  framerule=0pt,
+  keywordstyle=\color{blue}\bfseries,
+  rulesepcolor=\color{red!20!green!20!blue!20},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  numbersep=5pt,
+  stepnumber=1,
+  stringstyle=\color{purple},
+  numbers=left,
+  numberstyle=\small,
+  tabsize=4,
+  title=\lstname
+}
+
+\setmonofont{Consolas}
+
+\begin{document}
+\begin{tikzpicture}[show background grid]
+
+ %TOOD : 在这里添加 cc2uml 生成的 latex 代码
+
+\end{tikzpicture}
+
+\end{document}

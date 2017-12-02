@@ -1,0 +1,399 @@
+\documentclass{ctexbook}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usepackage{listings}
+\usepackage[school]{pgf-umlcd}
+
+%%%%%%%%%%%%%%%%%%%%%纸张大小%%%%%%%%%%%%%%%%%%%%%%%%
+%以下这四条指令是一组，可以设置纸张大小，并且
+%页边距
+\usepackage{geometry} % geometry 与 anysize 不能一起用
+%\geometry{paperwidth=1414mm,paperheight=1000mm} % B0 横向
+%\geometry{paper=b0paper,landscape} % B0 横向
+\geometry{paper=c1paper} 
+\geometry{left=1cm,right=1cm,top=1.5cm,bottom=1cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{breaklines}%这条命令可以让LaTeX自动将长的代码行换行排版
+\lstset{extendedchars=false}%这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+
+%常用设置
+\lstset{                        %Settings for listings package.
+  language=[ANSI]{C++},
+  backgroundcolor=\color{lightgray},
+    %basicstyle=\footnotesize,
+  basicstyle=\ttfamily\small,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  commentstyle=\color{olive},
+  directivestyle=\color{blue},
+  extendedchars=false,
+    % frame=single,%shadowbox
+  frame=shadowbox
+  framerule=0pt,
+  keywordstyle=\color{blue}\bfseries,
+    % morekeywords={*,define,*,include...},
+  rulesepcolor=\color{red!20!green!20!blue!20},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  numbersep=5pt,
+    %stepnumber=2,
+  stepnumber=1,
+  stringstyle=\color{purple},
+  numbers=left,
+    %numberstyle=\tiny,
+  numberstyle=\small,
+  tabsize=4,
+  title=\lstname
+}
+
+\setmonofont{Consolas}
+
+\begin{document}
+\begin{tikzpicture}[show background grid]
+  \begin{class}[text width = 7cm]{TObject}{0, 0}
+    \publicvirtualoperation{virtual {\textasciitilde}TObject()}
+    \publicstaticoperation{static void CLY{\textunderscore}destroy( TObject * )}
+    \publicvirtualoperation{virtual void shutDown()}
+  \end{class} %TObject
+
+  \begin{class}[text width = 8cm]{TStreamable}{10, 0}
+    \privateattribute{friend class opstream}
+    \privateattribute{friend class ipstream}
+    \privatevirtualoperation{virtual const char *streamableName() const = 0}
+    \protectedvirtualoperation{virtual void *read( ipstream\& ) = 0}
+    \protectedvirtualoperation{virtual void write( opstream\& ) = 0}
+    \publicvirtualoperation{virtual {\textasciitilde}TStreamable ()}
+  \end{class} %TStreamable
+
+  \begin{class}[text width = 17cm]{TView}{0, -5}
+    \inherit{TObject}
+    \inherit{TStreamable}
+    \publicoperation{friend void genRefs()}
+    \publicattribute{enum phaseType}
+    \publicattribute{enum selectMode}
+    \publicoperation{TView( const TRect\& bounds )}
+    \publicoperation{{\textasciitilde}TView()}
+    \publicvirtualoperation{virtual void sizeLimits( TPoint\& min, TPoint\& max )}
+    \publicoperation{TRect getBounds()}
+    \publicoperation{TRect getExtent()}
+    \publicoperation{TRect getClipRect()}
+    \publicoperation{Boolean mouseInView( TPoint mouse )}
+    \publicoperation{Boolean containsMouse( TEvent\& event )}
+    \publicoperation{void locate( TRect\& bounds )}
+    \publicvirtualoperation{virtual void dragView( TEvent\& event, uchar mode, TRect\& limits, TPoint minSize, TPoint maxSize )}
+    \publicvirtualoperation{virtual void calcBounds( TRect\& bounds, TPoint delta )}
+    \publicvirtualoperation{virtual void changeBounds( const TRect\& bounds )}
+    \publicoperation{void growTo( int x, int y )}
+    \publicoperation{void moveTo( int x, int y )}
+    \publicoperation{void setBounds( const TRect\& bounds )}
+    \publicvirtualoperation{virtual ushort getHelpCtx()}
+    \publicvirtualoperation{virtual Boolean valid( ushort command )}
+    \publicoperation{void hide()/texmf-dist/doc/generic/pgf/}
+    \publicoperation{void show()}
+    \publicvirtualoperation{virtual void draw()}
+    \publicoperation{void drawView()}
+    \publicoperation{Boolean exposed()}
+    \publicoperation{void hideCursor()}
+    \publicoperation{void drawHide( TView *lastView )}
+    \publicoperation{void drawShow( TView *lastView )}
+    \publicoperation{void drawUnderRect( TRect\& r, TView *lastView )}
+    \publicoperation{void drawUnderView( Boolean doShadow, TView *lastView )}
+    \publicvirtualoperation{virtual uint32 dataSize()}
+    \publicvirtualoperation{virtual void getData( void *rec )}
+    \publicvirtualoperation{virtual void setData( void *rec )}
+    \publicoperation{void blockCursor()}
+    \publicoperation{void normalCursor()}
+    \publicvirtualoperation{virtual void resetCursor()}
+    \publicoperation{void setCursor( int x, int y )}
+    \publicoperation{void showCursor()}
+    \publicoperation{void drawCursor()}
+    \publicoperation{void clearEvent( TEvent\& event )}
+    \publicoperation{Boolean eventAvail()}
+    \publicvirtualoperation{virtual void getEvent( TEvent\& event )}
+    \publicvirtualoperation{virtual void handleEvent( TEvent\& event )}
+    \publicvirtualoperation{virtual void putEvent( TEvent\& event )}
+    \publicoperation{void putEvent( ushort what, ushort command, void *infoPtr )}
+    \publicstaticoperation{static Boolean commandEnabled( ushort command )}
+    \publicstaticoperation{static void disableCommands( TCommandSet\& commands )}
+    \publicstaticoperation{static void enableCommands( TCommandSet\& commands )}
+    \publicstaticoperation{static void disableCommand( ushort command )}
+    \publicstaticoperation{static void enableCommand( ushort command )}
+    \publicstaticoperation{static void getCommands( TCommandSet\& commands )}
+    \publicstaticoperation{static void setCommands( TCommandSet\& commands )}
+    \publicvirtualoperation{virtual void endModal( ushort command )}
+    \publicvirtualoperation{virtual ushort execute()}
+    \publicoperation{ushort getColor( ushort color )}
+    \publicvirtualoperation{virtual TPalette\& getPalette() const}
+    \publicoperation{uchar mapColor( uchar )}
+    \publicoperation{Boolean getState( ushort aState )}
+    \publicoperation{void select()}
+    \publicvirtualoperation{virtual void setState( ushort aState, Boolean enable )}
+    \publicoperation{void keyEvent( TEvent\& event )}
+    \publicoperation{Boolean mouseEvent( TEvent\& event, ushort mask )}
+    \publicoperation{TPoint makeGlobal( TPoint source )}
+    \publicoperation{TPoint makeLocal( TPoint source )}
+    \publicoperation{TView *nextView()}
+    \publicoperation{TView *prevView()}
+    \publicoperation{TView *prev()}
+    \publicattribute{TView *next}
+    \publicoperation{void makeFirst()}
+    \publicoperation{void putInFrontOf( TView *Target )}
+    \publicoperation{TView *TopView()}
+    \publicoperation{void writeBuf(int x, int y, int w, int h, const void *b)}
+    \publicoperation{void writeBuf(int x, int y, int w, int h, TDrawBufferBase\& b)}
+    \publicoperation{void writeNativeBuf(int x, int y, int w, int h, const void *Buffer)}
+    \publicoperation{void writeLine(int x, int y, int w, int h, const void *b)}
+    \publicoperation{void writeLine(int x, int y, int w, int h, TDrawBufferBase\& b)}
+    \publicoperation{void writeNativeLine(int x, int y, int w, int h, const void *b)}
+    \publicoperation{void writeChar(int x, int y, char c, uchar color, int count)}
+    \publicoperation{void writeCharU16(int x, int y, unsigned c, unsigned color, int count)}
+    \publicoperation{void writeStr(int x, int y, const char *str, uchar color)}
+    \publicoperation{void writeStrU16(int x, int y, const uint16 *str, unsigned color)}
+    \publicattribute{TPoint size}
+    \publicattribute{ushort options}
+    \publicattribute{ushort eventMask}
+    \publicattribute{ushort state}
+    \publicattribute{TPoint origin}
+    \publicattribute{TPoint cursor}
+    \publicattribute{uchar growMode}
+    \publicattribute{uchar dragMode}
+    \publicattribute{ushort helpCtx/texmf-dist/doc/generic/pgf/}
+    \publicstaticattribute{static Boolean commandSetChanged}
+    \publicstaticattribute{static TCommandSet curCommandSet}
+    \publicattribute{TGroup *owner}
+    \publicstaticattribute{static Boolean showMarkers}
+    \publicstaticattribute{static uchar errorAttr}
+    \publicvirtualoperation{virtual void shutDown()}
+    \publicstaticattribute{static uchar specialChars[]}
+    \publicstaticattribute{static uchar ospecialChars[]}
+    \publicstaticattribute{static uchar noMoireUnFill}
+    \publicstaticattribute{static uchar noMoireFill}
+    \publicstaticattribute{static uchar onoMoireFill}
+    \privateoperation{void moveGrow( TPoint p, TPoint s, TRect\& limits, TPoint minSize, TPoint maxSize, uchar mode )}
+    \privateoperation{void change( uchar, TPoint delta, TPoint\& p, TPoint\& s, int grow=0 )}
+    \privatevirtualoperation{virtual const char *streamableName() const}
+    \protectedoperation{TView( StreamableInit )}
+    \publicstaticattribute{static const char * const name}
+    \publicstaticoperation{static TStreamable *build()}
+    \protectedvirtualoperation{virtual void write( opstream\& )}
+    \protectedvirtualoperation{virtual void *read( ipstream\& )}
+  \end{class} %TView
+
+  \begin{class}[text width = 12cm]{TGroup}{18, -5}
+    \inherit{TView}
+    \publicoperation{friend void genRefs()}
+    \publicoperation{TGroup( const TRect\& bounds )}
+    \publicoperation{{\textasciitilde}TGroup()}
+    \publicvirtualoperation{virtual void shutDown()}
+    \publicoperation{ushort execView( TView *p )}
+    \publicvirtualoperation{virtual ushort execute()}
+    \publicoperation{void insertView( TView *p, TView *Target )}
+    \publicoperation{void remove( TView *p )}
+    \publicoperation{void removeView( TView *p )}
+    \publicoperation{void resetCurrent()}
+    \publicoperation{void setCurrent( TView *p, selectMode mode )}
+    \publicoperation{void selectNext( Boolean forwards )}
+    \publicoperation{TView *firstThat( Boolean (*func)( TView *, void * ), void *args )}
+    \publicoperation{void forEach( void (*func)( TView *, void * ), void *args )}
+    \publicoperation{void insert( TView *p )}
+    \publicoperation{void insertBefore( TView *p, TView *Target )}
+    \publicattribute{TView *current}
+    \publicoperation{TView *at( short index )}
+    \publicoperation{TView *firstMatch( ushort aState, ushort aOptions )}
+    \publicoperation{short indexOf( TView *p )}
+    \publicoperation{Boolean matches( TView *p )}
+    \publicoperation{TView *first()}
+    \publicvirtualoperation{virtual void setState( ushort aState, Boolean enable )}
+    \publicvirtualoperation{virtual void handleEvent( TEvent\& event )}
+    \publicoperation{void drawSubViews( TView *p, TView *bottom )}
+    \publicvirtualoperation{virtual void changeBounds( const TRect\& bounds )}
+    \publicvirtualoperation{virtual uint32 dataSize()}
+    \publicvirtualoperation{virtual void getData( void *rec )}
+    \publicvirtualoperation{virtual void setData( void *rec )}
+    \publicvirtualoperation{virtual void draw()}
+    \publicoperation{void redraw()}
+    \publicoperation{void CLY{\textunderscore}Redraw()}
+    \publicoperation{void lock()}
+    \publicoperation{void unlock()}
+    \publicvirtualoperation{virtual void resetCursor()}
+    \publicvirtualoperation{virtual Boolean canShowCursor()}
+    \publicvirtualoperation{virtual void endModal( ushort command )}
+    \publicvirtualoperation{virtual void eventError( TEvent\& event )}
+    \publicvirtualoperation{virtual ushort getHelpCtx()}
+    \publicvirtualoperation{virtual Boolean valid( ushort command )}
+    \publicoperation{void freeBuffer()}
+    \publicoperation{void getBuffer()}
+    \publicattribute{TView *last}
+    \publicattribute{TRect clip}
+    \publicattribute{phaseType phase}
+    \publicattribute{ushort *buffer}
+    \publicattribute{uchar lockFlag}
+    \publicattribute{ushort endState}
+    \privateoperation{Boolean invalid( TView *p, ushort command )}
+    \privateoperation{void focusView( TView *p, Boolean enable )}
+    \privateoperation{void selectView( TView *p, Boolean enable )}
+    \privatevirtualoperation{virtual const char *streamableName() const}
+    \protectedoperation{TGroup( StreamableInit )}
+    \protectedvirtualoperation{virtual void write( opstream\& )}
+    \protectedvirtualoperation{virtual void *read( ipstream\& )}
+    \publicstaticattribute{static const char * const name}
+    \publicstaticoperation{static TStreamable *build()}
+  \end{class} %TGroup
+
+  \begin{class}[text width = 17cm]{TProgInit}{0, -70}
+    \publicoperation{TProgInit( TStatusLine *(*cStatusLine)( TRect ), TMenuBar *(*cMenuBar)( TRect ), TDeskTop *(*cDeskTop )( TRect ) )}
+    \publicvirtualoperation{virtual {\textasciitilde}TProgInit()}
+    \publicstaticattribute{static TVMainConfigFile *config}
+    \protectedattribute{TStatusLine *(*createStatusLine)( TRect )}
+    \protectedattribute{TMenuBar *(*createMenuBar)( TRect )}
+    \protectedattribute{TDeskTop *(*createDeskTop)( TRect )}
+    \protectedstaticattribute{static TScreen *tsc}
+  \end{class} %TProgInit
+
+  \begin{class}[text width = 12cm]{TProgram}{18, -40}
+    \inherit{TGroup}
+    \inherit{TProgInit}
+    \publicoperation{TProgram()}
+    \publicvirtualoperation{virtual {\textasciitilde}TProgram()}
+    \publicvirtualoperation{virtual void getEvent(TEvent\& event)}
+    \publicvirtualoperation{virtual TPalette\& getPalette() const}
+    \publicvirtualoperation{virtual void handleEvent(TEvent\& event)}
+    \publicvirtualoperation{virtual void idle()}
+    \publicvirtualoperation{virtual void initScreen()}
+    \publicvirtualoperation{virtual void outOfMemory()}
+    \publicvirtualoperation{virtual void putEvent( TEvent\& event )}
+    \publicvirtualoperation{virtual void run()}
+    \publicoperation{void setScreenMode( ushort mode, char *comm=0 )}
+    \publicoperation{void setScreenMode( unsigned w, unsigned h, int fW=-1, int fH=-1 )}
+    \publicoperation{TView *validView( TView *p )}
+    \publicvirtualoperation{virtual void shutDown()}
+    \publicvirtualoperation{virtual void suspend()}
+    \publicvirtualoperation{virtual void resume()}
+    \publicoperation{void syncScreenBuffer()}
+    \publicstaticoperation{static TStatusLine *initStatusLine( TRect )}
+    \publicstaticoperation{static TMenuBar *initMenuBar( TRect )}
+    \publicstaticoperation{static TDeskTop *initDeskTop( TRect )}
+    \publicstaticattribute{static TProgram * application}
+    \publicstaticattribute{static TStatusLine * statusLine}
+    \publicstaticattribute{static TMenuBar * menuBar}
+    \publicstaticattribute{static TDeskTop * deskTop}
+    \publicstaticattribute{static int appPalette}
+    \publicstaticattribute{static clock{\textunderscore}t lastIdleClock}
+    \publicstaticattribute{static clock{\textunderscore}t inIdleTime}
+    \publicstaticattribute{static Boolean inIdle}
+    \publicstaticoperation{static void resetIdleTime()}
+    \publicstaticattribute{static char doNotReleaseCPU}
+    \publicstaticattribute{static char doNotHandleAltNumber}
+    \protectedstaticattribute{static TEvent pending}
+  \end{class} %TProgram
+
+  \begin{class}[text width = 12cm]{TApplication}{18, -60}
+    \inherit{TProgram}
+    \protectedoperation{TApplication()}
+    \protectedvirtualoperation{virtual {\textasciitilde}TApplication()}
+    \protectedvirtualoperation{virtual void suspend()}
+    \protectedvirtualoperation{virtual void resume()}
+  \end{class} %TApplication
+
+  \begin{class}[text width = 12cm]{TVDemo}{18, -65}
+    \inherit{TApplication}
+    \publicoperation{TVDemo( int argc, char **argv )}
+    \publicstaticoperation{static TStatusLine *initStatusLine( TRect r )}
+    \publicstaticoperation{static TMenuBar *initMenuBar( TRect r )}
+    \publicstaticoperation{static TDeskTop *initDeskTop( TRect )}
+    \publicvirtualoperation{virtual void handleEvent(TEvent\& Event)}
+    \publicvirtualoperation{virtual void getEvent(TEvent\& event)}
+    \publicvirtualoperation{virtual TPalette\& getPalette() const}
+    \publicvirtualoperation{virtual void idle()}
+    \privateattribute{THeapView *heap}
+    \privateattribute{TClockView *clock}
+    \privateoperation{void aboutDlgBox()}
+    \privateoperation{void puzzle()}
+    \privateoperation{void calendar()}
+    \privateoperation{void asciiTable()}
+    \privateoperation{void calculator()}
+    \privateoperation{void openFile( char *fileSpec )}
+    \privateoperation{void changeDir()}
+    \privateoperation{void shell()}
+    \privateoperation{void tile()}
+    \privateoperation{void cascade()}
+    \privateoperation{void mouse()}
+    \privateoperation{void colors()}
+    \privateoperation{void outOfMemory()}
+    \privateoperation{void loadDesktop(fpstream\& s)}
+    \privateoperation{void retrieveDesktop()}
+    \privateoperation{void storeDesktop(fpstream\& s)}
+    \privateoperation{void saveDesktop()}
+    \privateoperation{void testInputBox()}
+    \privateoperation{void testPictureVal()}
+    \privatestaticattribute{static uchar systemMenuIcon[]}
+    \privatestaticattribute{static uchar osystemMenuIcon[]}
+    \publicstaticattribute{static TVCodePageCallBack oldCPCallBack}
+    \publicstaticoperation{static void cpCallBack(ushort *map)}
+  \end{class} %TVDemo
+%\iffalse
+%\fi
+  \begin{class}[text width = 5cm]{TObject}{30, 0}
+  \end{class} %TObject
+
+  \begin{class}[text width = 5cm]{TStreamable}{36, 0}
+  \end{class} %TStreamable
+
+  \begin{class}[text width = 5cm]{TView}{30, -2}
+    \inherit{TObject}
+    \inherit{TStreamable}
+  \end{class} %TView
+
+  \begin{class}[text width = 5cm]{TGroup}{30, -4}
+    \inherit{TView}
+  \end{class} %TGroup
+
+  \begin{class}[text width = 5cm]{TProgInit}{36, -4}
+  \end{class} %TProgInit
+
+  \begin{class}[text width = 5cm]{TProgram}{33, -6}
+    \inherit{TGroup}
+    \inherit{TProgInit}
+  \end{class} %TProgram
+  \umlnote(note) at (37,-5.4) {virtual 虚继承};
+
+  \begin{class}[text width = 5cm]{TApplication}{33, -8}
+    \inherit{TProgram}
+  \end{class} %TApplication
+
+  \begin{class}[text width = 5cm]{TEventQueue}{39, -8}
+  \end{class} %TApplication
+
+  \aggregation{TApplication}{1}{拥有}{1}{TEventQueue}
+
+  \begin{class}[text width = 5cm]{TVDemo}{33, -10}
+    \inherit{TApplication}
+  \end{class} %TVDemo
+
+  \begin{class}[text width = 5cm]{TDisplay}{44, 0}
+  \end{class} %TDisplay
+
+  \begin{class}[text width = 5cm]{TDisplayX11}{48, -2}
+    \inherit{TDisplay}
+  \end{class} %TDisplayX11
+  \umlnote(note) at (50,-1.4) {virtual 虚继承};
+
+  \begin{class}[text width = 5cm]{TScreen}{42, -2}
+    \inherit{TDisplay}
+  \end{class} %TScreen
+  \umlnote(note) at (40, -1.4) {virtual 虚继承};
+
+  \begin{class}[text width = 5cm]{TScreenX11}{44, -4}
+    \inherit{TDisplayX11}
+    \inherit{TScreen}
+  \end{class} %TScreen
+
+  \aggregation{TProgInit}{1}{拥有}{1}{TScreen}
+  \umlnote(note) at (33,-12) {类继承、聚合及组合简略图};
+\end{tikzpicture}
+
+\end{document}

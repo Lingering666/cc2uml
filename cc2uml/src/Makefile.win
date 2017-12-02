@@ -1,0 +1,27 @@
+#CFLAGS=-std=gnu11 -Wall --static -static-libgcc  -static -municode
+#CXXFLAGS=-std=gnu++14 -Wall --static -static-libgcc -static-libstdc++ -static
+#CFLAGS=-municode -std=gnu11 -Wall -finput-charset=GB18030 -fexec-charset=utf-8 -fwide-exec-charset=utf-16LE --static -static-libgcc -static-libstdc++ -static
+#CXXFLAGS=-municode -std=gnu++14 -Wall -finput-charset=GB18030 -fexec-charset=utf-8 -fwide-exec-charset=utf-16LE --static -static-libgcc -static-libstdc++ -static
+CFLAGS=-std=gnu11 -Wall -finput-charset=GB18030 -fexec-charset=utf-8 -fwide-exec-charset=utf-16LE --static -static-libgcc -static-libstdc++ -static
+CXXFLAGS=-std=gnu++14 -Wall -finput-charset=GB18030 -fexec-charset=utf-8 -fwide-exec-charset=utf-16LE --static -static-libgcc -static-libstdc++ -static
+#CPPFLAGS=-I. -D_UNICODE -DUNICODE
+CPPFLAGS=-I.
+LDFLAGS=--static 
+CSRC := cc2uml.c
+#CSRC := $(wildcard *.c)
+CXXSRC := $(wildcard *.cc)
+EXE:=$(CSRC:.c=.exe) $(CXXSRC:.cc=.exe)
+
+.PHONY: all clean
+
+all: $(EXE)
+
+%.exe:%.c
+	gcc $(CFLAGS) -mconsole $(CPPFLAGS) -o $@ $< $(LDFLAGS) $(LDLIBS)
+
+%.exe:%.cc
+	g++ $(CXXFLAGS) -mconsole $(CPPFLAGS) -o $@ $< $(LDFLAGS) $(LDLIBS)
+
+clean:
+	rm $(EXE)
+
